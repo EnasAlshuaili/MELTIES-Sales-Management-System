@@ -38,8 +38,6 @@ Open http://127.0.0.1:5000
 
 The SQLite database `melties.db` is created automatically on first run, with sample products.
 
-Change the demo password and set a strong `SECRET_KEY` before deploying publicly. For example, set `SECRET_KEY` in your environment before running the app.
-
 ## Business logic
 - Checkout validates customer details, order type, product availability, and stock.
 - Prices and totals are calculated on the server. Each order item stores the product name and unit price at the time of purchase.
