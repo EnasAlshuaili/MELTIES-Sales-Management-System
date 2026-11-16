@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MELTIES{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">m</span><span>MELTIES<small>BAKED WITH LOVE</small></span></a>
+  <nav>
+    <a href="{{ url_for('home') }}">Shop</a>
+    {% if session.get('admin_id') %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('orders') }}">Orders</a>
+      <a href="{{ url_for('products') }}">Products</a><a href="{{ url_for('reports') }}">Reports</a>
+      <a class="nav-admin" href="{{ url_for('admin_logout') }}">Logout</a>
+    {% else %}<a href="{{ url_for('admin_login') }}">Admin</a>{% endif %}
+  </nav>
+</header>
+<main class="page">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer"><b>MELTIES</b><span>Small batch cookies · Muscat, Oman</span><span>© 2026 MELTIES</span></footer>
+{% block scripts %}{% endblock %}
+</body></html>

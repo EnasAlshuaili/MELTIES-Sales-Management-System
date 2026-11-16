@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% block title %}MELTIES | Freshly baked cookies{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy"><span class="eyebrow">A LITTLE BITE OF HAPPINESS</span><h1>Good days start<br>with <em>cookies.</em></h1>
+    <p>Freshly baked, beautifully soft, and made to make your day sweeter.</p><a class="btn" href="#menu">Explore the menu <span>↗</span></a>
+  </div><div class="hero-image"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1200" alt="Fresh chocolate chip cookies"></div>
+  <div class="hero-stamp">FRESH<br>BAKED<br>WITH LOVE</div>
+</section>
+<section id="menu" class="section-head"><div><span class="eyebrow">THE GOOD STUFF</span><h2>Our cookie menu</h2></div><p>Choose your favourites.<br>We'll take care of the sweet part.</p></section>
+<div class="shop-layout">
+  <section class="product-grid">
+    {% for p in products %}
+    <article class="product-card">
+      <div class="product-photo"><img src="{{ p.image }}" alt="{{ p.name }}" onerror="this.src='https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800'"></div>
+      <div class="product-info"><div><h3>{{ p.name }}</h3><p>{{ p.description }}</p></div><strong>{{ p.price|omr }}</strong></div>
+      <div class="product-bottom"><span class="stock-note">{{ p.stock_quantity }} available</span><button class="add-btn" data-id="{{ p.id }}" data-name="{{ p.name }}" data-price="{{ p.price }}" data-stock="{{ p.stock_quantity }}">Add to cart +</button></div>
+    </article>
+    {% else %}<p>No products available right now.</p>{% endfor %}
+  </section>
+  <aside class="cart-panel"><div class="cart-title"><h3>Your basket</h3><span id="cart-count">0 items</span></div><div id="cart-items" class="cart-items"><p class="empty-cart">Your sweet picks will appear here.</p></div>
+    <div class="cart-total"><span>Total</span><b id="cart-total">OMR 0.000</b></div>
+    <form id="checkout-form">
+      <label>Your name<input name="customer_name" required placeholder="Full name"></label>
+      <label>Phone number<input name="phone" required placeholder="+968"></label>
+      <label>Order type<select name="order_type" id="order-type"><option>Pickup</option><option>Delivery</option></select></label>
+      <label id="address-label" class="hidden">Delivery address<input name="address" placeholder="Area, street, building"></label>
+      <label>Notes <small>(optional)</small><textarea name="notes" rows="2" placeholder="Any special instructions?"></textarea></label>
+      <button class="btn btn-full" type="submit">Place my order</button>
+      <p class="form-hint">Payment is arranged on pickup or delivery. No online payment is collected.</p>
+      <div id="checkout-message" role="status"></div>
+    </form>
+  </aside>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/shop.js') }}"></script>{% endblock %}

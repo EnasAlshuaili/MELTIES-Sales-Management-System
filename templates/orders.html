@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Orders | MELTIES{% endblock %}
+{% block content %}<div class="admin-heading"><div><span class="eyebrow">CUSTOMER ACTIVITY</span><h1>Orders</h1><p>Review orders and keep every cookie moving.</p></div></div>
+<section class="panel table-panel"><form class="filter-bar" method="get"><input name="q" value="{{ q }}" placeholder="Search order or customer"><select name="status"><option value="">All statuses</option>{% for s in statuses %}<option {{ 'selected' if selected==s }}>{{ s }}</option>{% endfor %}</select><button class="btn btn-small">Filter</button><a class="text-link" href="{{ url_for('orders') }}">Reset</a></form>
+<div class="table-scroll"><table><thead><tr><th>Order</th><th>Customer</th><th>Phone</th><th>Date</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody>
+{% for o in orders %}<tr><td>#{{ o.id }}</td><td>{{ o.customer_name }}</td><td>{{ o.phone }}</td><td>{{ o.created_at|datetime }}</td><td>{{ o.total_amount|omr }}</td><td><span class="pill {{ o.payment_status|lower }}">{{ o.payment_status }}</span></td><td><span class="pill {{ o.order_status|lower }}">{{ o.order_status }}</span></td><td><a class="text-link" href="{{ url_for('order_detail',order_id=o.id) }}">Open →</a></td></tr>
+{% else %}<tr><td colspan="8" class="empty-cell">No matching orders found.</td></tr>{% endfor %}
+</tbody></table></div></section>{% endblock %}
